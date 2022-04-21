@@ -27,14 +27,18 @@ def language_code(language, voice):
             return ['fr-FR', 'fr-FR-Standard-B', 'MALE']
         elif(language == 'Finnish'):
             return ['fi-FI', 'fi-FI-Standard-B', 'MALE']
+    else:
+        # default return english
+        return ['en-GB', 'en-GB-Standard-B', 'MALE']
 
 
 def textToSpeech(text, fileName,  voice, languages):
 
-    #token = subprocess.run(["gcloud auth application-default print-access-token"], shell=True, stdout=subprocess.PIPE)
-    token = subprocess.check_output(["gcloud auth application-default print-access-token"], shell=True)
+    token = subprocess.check_output(
+        ["gcloud auth application-default print-access-token"], shell=True)
     token = token.decode().rstrip("\n")
     languageCode, name, ssmlGender = language_code(languages, voice)
+
     params = {
         "input": {
             "text": text
@@ -48,21 +52,28 @@ def textToSpeech(text, fileName,  voice, languages):
             "audioEncoding": "mp3"
         }
     }
+    
     headers = CaseInsensitiveDict()
     headers["Authorization"] = "Bearer {}".format(token)
     headers["Content-Type"] = "application/json; charset=utf-8;"
     url = "https://texttospeech.googleapis.com/v1/text:synthesize"
 
-    
     response = requests.post(url, json=params, headers=headers)
     print(response.status_code)
-    audioBase64 = response.json()["audioContent"]
-    print(audioBase64)
-    audioDecoded = base64.b64decode(audioBase64)
+    audioBase64 = response.json()
 
-    realPath = '/Users/loicsauter/Documents/courses JYU/deepLearning for developers/task7/data/{}.mp3'.format(
-        fileName)
-    f = open(realPath, "wb")
-    f.write(audioDecoded)
-    f.close()
-    return realPath
+    if("audioContent" not in audioBase64 or response.status_code != 200 ):
+        # error occured
+        return None, audioBase64
+
+    try:
+        audioDecoded = base64.b64decode(audioBase64["audioContent"])
+        realPath = '/Users/loicsauter/Documents/courses JYU/deepLearning for developers/task7/data/{}.mp3'.format(
+            fileName)
+        f = open(realPath, "wb")
+        f.write(audioDecoded)
+        f.close()
+    except Exception as E:
+        return None, E
+
+    return realPath, None

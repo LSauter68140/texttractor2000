@@ -1,4 +1,4 @@
-(async () => {
+(async (text) => {
     // Imports the Google Cloud client library
     const language = require('@google-cloud/language');
 
@@ -6,7 +6,7 @@
     const client = new language.LanguageServiceClient();
 
     // The text to analyze
-    const text = 'I hate muffin';
+    //const text = 'I hate muffin';
 
     const document = {
         content: text,
@@ -16,7 +16,6 @@
     // Detects the sentiment of the text
     const [result] = await client.analyzeSentiment({ document: document });
     const sentiment = result.documentSentiment;
-    console.log(`Text: ${text}`);
-    console.log(`Sentiment score: ${sentiment.score}`);
-    console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
-})()
+    console.log(sentiment.score);
+    //console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
+})(process.argv[2])

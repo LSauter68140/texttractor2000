@@ -11,8 +11,8 @@ class Translate(Resource):
         except:
             return {'errorMessage': 'Wrong request...'}, 500
         if(len(data)>0):
-            response = getTranslation(data)
-            err = None
+            response, err = getTranslation(data)
+            
         else:
             return {'errorMessage': 'Please, provide a fileName...'}, 500
         if response:
@@ -24,12 +24,3 @@ class Translate(Resource):
 api.add_resource(Translate, '/translate') 
 if __name__ == "__main__":
     app.run()
-
-    
-
-## input
-
-## language
-## output in text or audio
-## text or image 
-## femal or mal if audio
