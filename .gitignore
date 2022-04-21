@@ -1,1 +1,3 @@
 submodule/node_modules/
+__pycache__/
+submodule/__pycache__/
