@@ -3,6 +3,8 @@ import subprocess
 
 from submodule.textToSpeech import textToSpeech
 
+### work only for linux or macOs, if you se windows change it before to start
+nodePath = '/usr/local/bin/node'
 
 def getTranslation(data):
 
@@ -12,7 +14,7 @@ def getTranslation(data):
         if(os.path.exists(data["file"]) and data["file"].split(".")[-1].lower() in ["jpg", "png", "jpeg"]):
             # get the image text in to text
             p = subprocess.Popen(
-                ['/usr/local/bin/node', 'submodule/imageToText.js', data["file"]], stdout=subprocess.PIPE)
+                [nodePath, 'submodule/imageToText.js', data["file"]], stdout=subprocess.PIPE)
             textToTranslate = p.stdout.read().decode('UTF8')
         else:
             return None, "Unreachable file sorry"
@@ -25,7 +27,7 @@ def getTranslation(data):
         return None, "Miss 'language' or 'voice' attribut in the body"
 
     # translate the text
-    p = subprocess.Popen(['/usr/local/bin/node', 'submodule/translate.js',
+    p = subprocess.Popen([nodePath, 'submodule/translate.js',
                          textToTranslate, data['language']], stdout=subprocess.PIPE)
     textTranslated = p.stdout.read().decode('UTF8')
 

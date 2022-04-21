@@ -25,6 +25,10 @@ python task7_flask.py
 
 ```
 
+Be carefull you have to change *nodePath* from **task7_api*** and *dataPath* from **textToSpeech** before to start the serveur
+
+
+
 Open postamn and create a new post query
 
 ```

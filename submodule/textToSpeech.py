@@ -3,6 +3,8 @@ import subprocess
 import requests
 from requests.structures import CaseInsensitiveDict
 
+### put here your output folder in absolute
+dataPath = ""
 
 def language_code(language, voice):
     if(voice == 'FEMALE'):
@@ -68,7 +70,7 @@ def textToSpeech(text, fileName,  voice, languages):
 
     try:
         audioDecoded = base64.b64decode(audioBase64["audioContent"])
-        realPath = '/Users/loicsauter/Documents/courses JYU/deepLearning for developers/task7/data/{}.mp3'.format(
+        realPath = '/{}.mp3'.format(
             fileName)
         f = open(realPath, "wb")
         f.write(audioDecoded)
