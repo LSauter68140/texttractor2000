@@ -25,7 +25,7 @@ python task7_flask.py
 
 ```
 
-Be carefull you have to change *nodePath* from **task7_api*** and *dataPath* from **textToSpeech** before to start the serveur
+Be carefull you have to change *nodePath* from **task7_api** and *dataPath* from **textToSpeech** before to start the serveur
 
 
 
@@ -37,6 +37,10 @@ http://127.0.0.1:5000/translate
 ```
 
 ## Example
+
+The json for the post query
+
+Voice can accept *FEMALE* or *MALE* only, we are working on *Non-binary*
 
 
 #### Simple one : 
