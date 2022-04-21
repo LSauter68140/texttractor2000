@@ -54,9 +54,8 @@ Can use jpg or png image
     "language" : "Finnish"
 }
 
-
-
 ```
+The api will return the path of your audio.mp3 with the translation
 
 
 
