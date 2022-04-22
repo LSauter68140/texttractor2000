@@ -3,8 +3,9 @@ import subprocess
 import requests
 from requests.structures import CaseInsensitiveDict
 
-### put here your output folder in absolute
-dataPath = ""
+# put here your output folder in absolute
+dataPath = "/Users/loicsauter/Documents/courses JYU/deepLearning for developers/task7/data/"
+
 
 def language_code(language, voice):
     if(voice == 'FEMALE'):
@@ -54,7 +55,7 @@ def textToSpeech(text, fileName,  voice, languages):
             "audioEncoding": "mp3"
         }
     }
-    
+
     headers = CaseInsensitiveDict()
     headers["Authorization"] = "Bearer {}".format(token)
     headers["Content-Type"] = "application/json; charset=utf-8;"
@@ -64,14 +65,14 @@ def textToSpeech(text, fileName,  voice, languages):
     print(response.status_code)
     audioBase64 = response.json()
 
-    if("audioContent" not in audioBase64 or response.status_code != 200 ):
+    if("audioContent" not in audioBase64 or response.status_code != 200):
         # error occured
         return None, audioBase64
 
     try:
         audioDecoded = base64.b64decode(audioBase64["audioContent"])
-        realPath = '/{}.mp3'.format(
-            fileName)
+        realPath = '{}/{}.mp3'.format(dataPath,
+                                      fileName)                    
         f = open(realPath, "wb")
         f.write(audioDecoded)
         f.close()

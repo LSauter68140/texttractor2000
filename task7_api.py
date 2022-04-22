@@ -23,7 +23,12 @@ def getTranslation(data):
     else:
         return None, "Miss 'text or 'file' attribut in the body"
 
-    if("language" not in data or "voice" not in data):
+    # ## get feeling 
+    # p = subprocess.Popen(
+    #             [nodePath, 'submodule/imageToText.js', textToTranslate], stdout=subprocess.PIPE)
+    # sentimentScore =  p.stdout.read().decode('UTF8')
+
+    if("language" not in data):
         return None, "Miss 'language' or 'voice' attribut in the body"
 
     # translate the text
@@ -32,7 +37,7 @@ def getTranslation(data):
     textTranslated = p.stdout.read().decode('UTF8')
 
     ## get the text in to speech if needed
-    if("outputFileName" in data):
+    if("outputFileName" in data and "voice" in data):
         path, err = textToSpeech(
             textTranslated, data['outputFileName'],  data['voice'], data['language'])    
         if (err != None):

@@ -15,8 +15,8 @@ const langageToCode = (language) => {
       return "fr"
     case "Finnish":
       return "fi"
-    default :
-    // default language
+    default:
+      // default language
       return "English"
   }
 }
@@ -24,7 +24,7 @@ const langageToCode = (language) => {
 (async (textToTranslate, targetLanguage) => {
   // Translates some text into the targetLanguage
   const [translation] = await translate.translate(textToTranslate, langageToCode(targetLanguage));
-  console.log(translation);
+  console.log(translation.replace(/\n/g, ''));
 })(process.argv[2], process.argv[3])
 
 
