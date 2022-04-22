@@ -24,9 +24,9 @@ def getTranslation(data):
         return None, "Miss 'text or 'file' attribut in the body"
 
     # ## get feeling 
-    # p = subprocess.Popen(
-    #             [nodePath, 'submodule/imageToText.js', textToTranslate], stdout=subprocess.PIPE)
-    # sentimentScore =  p.stdout.read().decode('UTF8')
+    p = subprocess.Popen(
+                 [nodePath, 'submodule/detectFeeling.js', textToTranslate], stdout=subprocess.PIPE)
+    sentimentScore =  p.stdout.read().decode('UTF8')
 
     if("language" not in data):
         return None, "Miss 'language' or 'voice' attribut in the body"
@@ -48,13 +48,12 @@ def getTranslation(data):
         outText = textTranslated
 
     ## return a resp for flask app
+    returnObject = {
+            "Orignal Text": textToTranslate,
+            "Sentiment Score" : sentimentScore[:-11]
+        }
     if(path == None):
-        return {
-            "Orignal Text": textToTranslate,
-            "Translation": outText
-        }, None
+        returnObject["Translation"] = outText
     else:
-        return {
-            "Orignal Text": textToTranslate,
-            "File path to the audio translation": path
-        }, None
+        returnObject["File path to the audio translation"] = path
+    return returnObject, None
